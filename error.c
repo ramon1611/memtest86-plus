@@ -3,7 +3,7 @@
  * Released under version 2 of the Gnu Public License.
  * By Chris Brady
  */
-//#include <time.h>
+//# 	
 #include "stddef.h"
 #include "stdint.h"
 #include "test.h"
@@ -12,6 +12,7 @@
 #include "smp.h"
 #include "dmi.h"
 #include "controller.h"
+#include <pthread.h>
 
 extern int dmi_err_cnts[MAX_DMI_MEMDEVS];
 extern int beepmode;
@@ -100,7 +101,6 @@ static void update_err_counts(void)
 {
 	if (beepmode){
 		beep(600);
-		//timer();
 		beep(1000);
 	}
 	
