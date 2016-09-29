@@ -24,4 +24,7 @@ void change_timing_amd64(int cas, int rcd, int rp, int ras);
 void amd64_tweak(int rwt, int wrt, int ref, int en2t, int rct, int rrd, int rwqb, int wr);
 void __delay(ulong loops);
 
+//void timer (int time);
+//void timer_async (int time);
+
 #endif /* MEMTEST_EXTRA_H */

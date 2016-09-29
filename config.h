@@ -17,7 +17,7 @@
 #define CONSERVATIVE_SMP 1
 
 /* BEEP_MODE - Beep on error. Default off, Change to 1 to enable */
-#define BEEP_MODE 0
+#define BEEP_MODE 1
 
 /* BEEP_END_NO_ERROR - Beep at end of each pass without error. Default off, Change to 1 to enable */
 #define BEEP_END_NO_ERROR 0
