@@ -3,8 +3,13 @@
  * Released under version 2 of the Gnu Public License.
  * By Chris Brady
  */
-//# 	
-#include "stddef.h"
+
+#ifndef _POSIX_PTHREAD_SEMANTICS
+#define _POSIX_PTHREAD_SEMANTICS
+#endif /* _POSIX_PTHREAD_SEMANTICS */
+
+//#include "stddef.h"
+#include "pthread.h"
 #include "stdint.h"
 #include "test.h"
 #include "config.h"
@@ -12,7 +17,6 @@
 #include "smp.h"
 #include "dmi.h"
 #include "controller.h"
-#include <pthread.h>
 
 extern int dmi_err_cnts[MAX_DMI_MEMDEVS];
 extern int beepmode;
@@ -29,7 +33,7 @@ static void update_err_counts(void);
 static void print_err_counts(void);
 static void common_err();
 static int syn, chan, len=1;
-
+int thread_created=0;
 /*
  * Display data error message. Don't display duplicate errors.
  */
@@ -97,9 +101,31 @@ void ad_err2(ulong *adr, ulong bad)
 	spin_unlock(&barr->mutex);
 }
 
+void *async_beep () {
+	int time=0;
+	while (time < 500000) {
+		beep(600);
+                beep(1000);
+		
+		time++;
+	}
+	
+	pthread_exit(NULL);
+}
+
 static void update_err_counts(void)
 {
 	if (beepmode){
+		if ( !thread_created ) {
+			pthread_t thread1;
+			int rc;
+			
+			rc = pthread_create( &thread1, NULL, async_beep, NULL );
+        		if ( rc != 0 ) {
+                		cprint(0, 0, "Unable to create new Thread!");
+        		}
+		}
+		
 		beep(600);
 		beep(1000);
 	}
